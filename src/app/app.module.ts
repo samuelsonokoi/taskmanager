@@ -15,6 +15,9 @@ import { environment } from "src/environments/environment";
 import { PnotifyService } from "./services/pnotify.service";
 import { UserComponent } from "./components/user/user.component";
 import { AuthComponent } from "./components/auth/auth.component";
+import { CompletedTasksComponent } from './components/user/completed-tasks/completed-tasks.component';
+import { PendingTasksComponent } from './components/user/pending-tasks/pending-tasks.component';
+import { OverdueTasksComponent } from './components/user/overdue-tasks/overdue-tasks.component';
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -41,7 +44,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 };
 
 @NgModule({
-  declarations: [AppComponent, UserComponent, AuthComponent],
+  declarations: [AppComponent, UserComponent, AuthComponent, CompletedTasksComponent, PendingTasksComponent, OverdueTasksComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

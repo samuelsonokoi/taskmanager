@@ -1,1 +1,66 @@
-<p>user works!</p>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-clip-rotate"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="card-container">
+  <div class="user-header">
+    <img src="{{ user?.photoURL }}" alt="{{ user?.displayName }}" />
+    <h3>Hello, {{ user?.displayName }}</h3>
+  </div>
+</div>
+
+<div class="card-container">
+  <a
+    class="card"
+    target="_blank"
+    rel="noopener"
+    href="https://angular.io/tutorial"
+  >
+    <span>Completed Tasks</span>
+    <svg
+      class="material-icons"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+    </svg>
+  </a>
+
+  <a class="card" target="_blank" rel="noopener" href="https://angular.io/cli">
+    <span>Pending Tasks</span>
+    <svg
+      class="material-icons"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+    </svg>
+  </a>
+
+  <a
+    class="card"
+    target="_blank"
+    rel="noopener"
+    href="https://blog.angular.io/"
+  >
+    <span>Overdue Tasks</span>
+    <svg
+      class="material-icons"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+    </svg>
+  </a>
+</div>

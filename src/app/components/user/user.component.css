@@ -1,0 +1,10 @@
+div.user-header {
+  margin: 3em auto;
+  text-align: center;
+}
+
+div.user-header img {
+  height: 6em;
+  width: 6em;
+  margin-bottom: 0.5em;
+}
