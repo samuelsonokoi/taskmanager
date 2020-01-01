@@ -65,7 +65,11 @@
   <!-- Resources -->
   <h2>Please sign in to continue</h2>
 
-  <firebase-ui></firebase-ui>
+  <firebase-ui
+    (signInSuccessWithAuthResult)="successCallback($event)"
+    (signInFailure)="errorCallback($event)"
+  >
+  </firebase-ui>
 
   <!-- <div class="card-container">
     <a class="card" target="_blank" rel="noopener" href="https://angular.io/tutorial">
@@ -220,15 +224,8 @@
   </div> -->
 
   <!-- Footer -->
-  <footer>
-    &copy; copyright MiTaski {{ year }}, All rights reserved. &nbsp;&nbsp;
-    <a
-      href="https://github.com/samuelsonokoi/taskmanagement"
-      target="_blank"
-      rel="noopener"
-    >
-      Source code
-    </a>
+  <footer style="margin-top: 5em;">
+    &copy; copyright MiTaski {{ year }}, All rights reserved.
   </footer>
 
   <svg
