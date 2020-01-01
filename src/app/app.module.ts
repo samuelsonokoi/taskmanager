@@ -15,9 +15,12 @@ import { environment } from "src/environments/environment";
 import { PnotifyService } from "./services/pnotify.service";
 import { UserComponent } from "./components/user/user.component";
 import { AuthComponent } from "./components/auth/auth.component";
-import { CompletedTasksComponent } from './components/user/completed-tasks/completed-tasks.component';
-import { PendingTasksComponent } from './components/user/pending-tasks/pending-tasks.component';
-import { OverdueTasksComponent } from './components/user/overdue-tasks/overdue-tasks.component';
+import { CompletedTasksComponent } from "./components/user/completed-tasks/completed-tasks.component";
+import { PendingTasksComponent } from "./components/user/pending-tasks/pending-tasks.component";
+import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-tasks.component";
+import { OverviewComponent } from "./components/user/overview/overview.component";
+import { AuthService } from "./services/auth.service";
+import { TaskService } from "./services/task.service";
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -44,7 +47,15 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
 };
 
 @NgModule({
-  declarations: [AppComponent, UserComponent, AuthComponent, CompletedTasksComponent, PendingTasksComponent, OverdueTasksComponent],
+  declarations: [
+    AppComponent,
+    UserComponent,
+    AuthComponent,
+    CompletedTasksComponent,
+    PendingTasksComponent,
+    OverdueTasksComponent,
+    OverviewComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -58,7 +69,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
-  providers: [Title, PnotifyService],
+  providers: [Title, PnotifyService, AuthService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

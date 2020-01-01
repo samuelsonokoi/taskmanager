@@ -1,10 +1,14 @@
 div.user-header {
   margin: 3em auto;
-  text-align: center;
 }
 
 div.user-header img {
   height: 6em;
   width: 6em;
   margin-bottom: 0.5em;
+}
+
+a.card.active {
+  background-color: rgba(0, 132, 255, 0.87);
+  color: #fff;
 }

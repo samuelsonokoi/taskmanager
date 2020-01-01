@@ -5,13 +5,15 @@ import { AuthComponent } from "./components/auth/auth.component";
 import { CompletedTasksComponent } from "./components/user/completed-tasks/completed-tasks.component";
 import { PendingTasksComponent } from "./components/user/pending-tasks/pending-tasks.component";
 import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-tasks.component";
+import { OverviewComponent } from "./components/user/overview/overview.component";
 
 const routes: Routes = [
-  { path: "", component: AuthComponent },
+  { path: "", component: AuthComponent, pathMatch: "full" },
   {
     path: "user",
     component: UserComponent,
     children: [
+      { path: "", component: OverviewComponent, pathMatch: "full" },
       { path: "completed-tasks", component: CompletedTasksComponent },
       { path: "pending-tasks", component: PendingTasksComponent },
       { path: "overdue-tasks", component: OverdueTasksComponent }

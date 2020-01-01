@@ -8,9 +8,10 @@
 </ngx-spinner>
 
 <div class="card-container">
-  <div class="user-header">
+  <div class="user-header text-center">
     <img src="{{ user?.photoURL }}" alt="{{ user?.displayName }}" />
     <h3>Hello, {{ user?.displayName }}</h3>
+    <button class="btn btn-primary" (click)="sign_out()">Sign Out</button>
   </div>
 </div>
 
@@ -20,16 +21,9 @@
     [routerLink]="['/user/completed-tasks']"
     routerLinkActive="active"
   >
-    <span>Completed Tasks</span>
-    <svg
-      class="material-icons"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-    </svg>
+    <span class="badge badge-primary mr-1">{{ completed_tasks.length }}</span>
+    <span>Completed Tasks</span> &nbsp;&nbsp;
+    <i class="fa fa-angle-right"></i>
   </a>
 
   <a
@@ -37,16 +31,9 @@
     [routerLink]="['/user/pending-tasks']"
     routerLinkActive="active"
   >
-    <span>Pending Tasks</span>
-    <svg
-      class="material-icons"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-    </svg>
+    <span class="badge badge-primary mr-1">{{ pending_tasks.length }}</span>
+    <span>Pending Tasks</span> &nbsp;&nbsp;
+    <i class="fa fa-angle-right"></i>
   </a>
 
   <a
@@ -54,15 +41,10 @@
     [routerLink]="['/user/overdue-tasks']"
     routerLinkActive="active"
   >
-    <span>Overdue Tasks</span>
-    <svg
-      class="material-icons"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-    </svg>
+    <span class="badge badge-primary mr-1">{{ overdue_tasks.length }}</span>
+    <span>Overdue Tasks</span> &nbsp;&nbsp;
+    <i class="fa fa-angle-right"></i>
   </a>
 </div>
+
+<router-outlet></router-outlet>
