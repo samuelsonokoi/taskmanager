@@ -17,9 +17,8 @@
 <div class="card-container">
   <a
     class="card"
-    target="_blank"
-    rel="noopener"
-    href="https://angular.io/tutorial"
+    [routerLink]="['/user/completed-tasks']"
+    routerLinkActive="active"
   >
     <span>Completed Tasks</span>
     <svg
@@ -33,7 +32,11 @@
     </svg>
   </a>
 
-  <a class="card" target="_blank" rel="noopener" href="https://angular.io/cli">
+  <a
+    class="card"
+    [routerLink]="['/user/pending-tasks']"
+    routerLinkActive="active"
+  >
     <span>Pending Tasks</span>
     <svg
       class="material-icons"
@@ -48,9 +51,8 @@
 
   <a
     class="card"
-    target="_blank"
-    rel="noopener"
-    href="https://blog.angular.io/"
+    [routerLink]="['/user/overdue-tasks']"
+    routerLinkActive="active"
   >
     <span>Overdue Tasks</span>
     <svg
