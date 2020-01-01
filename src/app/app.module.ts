@@ -1,16 +1,20 @@
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { FirebaseUIModule, firebase, firebaseui } from "firebaseui-angular";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { environment } from "src/environments/environment";
 import { PnotifyService } from "./services/pnotify.service";
+import { UserComponent } from "./components/user/user.component";
+import { AuthComponent } from "./components/auth/auth.component";
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -30,18 +34,20 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       }
     }
   ],
-  signInSuccessUrl: "/user/dashboard",
+  signInSuccessUrl: "",
   tosUrl: "",
   privacyPolicyUrl: "",
   credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
 };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserComponent, AuthComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
