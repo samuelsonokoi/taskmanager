@@ -1,4 +1,176 @@
-<h4 class="text-center text-primary mb-5">Assign Task To User</h4>
+import { Component, OnInit } from "@angular/core";
+import { TaskService } from "src/app/services/task.service";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { IUser } from "src/app/models/user.model";
+import { ITask } from "src/app/models/task.model";
+import { Subscription } from "rxjs";
+import { AuthService } from "src/app/services/auth.service";
+import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
+
+@Component({
+  selector: "app-assign-task",
+  templateUrl: "./assign-task.component.html",
+  styleUrls: ["./assign-task.component.css"]
+})
+export class AssignTaskComponent implements OnInit {
+  taskForm: FormGroup;
+  users: IUser[] = [];
+  user: IUser;
+  user_tasks: ITask[] = [];
+  selected_user: IUser;
+  sub: Subscription;
+  calendarOptions = {
+    fromDate: moment(),
+    isFromNow: true
+  };
+  start_date = null;
+  end_date = null;
+  calendarEvents = [];
+  end_date_in_past: boolean = false;
+  start_date_in_past: boolean = false;
+  end_date_today: boolean = false;
+  start_date_today: boolean = false;
+  valid_start_date: boolean = false;
+  valid_end_date: boolean = false;
+
+  constructor(
+    private _task: TaskService,
+    private _auth: AuthService,
+    private _spinner: NgxSpinnerService
+  ) {}
+
+  ngOnInit() {
+    this.taskForm = new FormGroup({
+      task: new FormControl("", [Validators.required]),
+      description: new FormControl("", [Validators.required]),
+      assigned_to: new FormControl("", [Validators.required])
+    });
+
+    this.sub = this._auth.user.subscribe((user: IUser) => {
+      this.user = user;
+    });
+
+    this.sub = this._task.get_all_users().subscribe((users: IUser[]) => {
+      this.users = users;
+    });
+  }
+
+  ngOnDestroy = (): void => {
+    this.sub.unsubscribe();
+  };
+
+  onChooseStartDate = (date: string) => {
+    if (date !== null) {
+      this.start_date = moment(date).format();
+      this.check_date(date, "start_date");
+    }
+  };
+
+  onChooseEndDate = (date: string) => {
+    if (date !== null) {
+      this.end_date = moment(date).format();
+      this.check_date(date, "end_date");
+    }
+  };
+
+  add_task = () => {
+    const { task, description } = this.taskForm.value;
+
+    const data: ITask = {
+      task,
+      description,
+      start_date: this.start_date,
+      end_date: this.end_date,
+      assigned_to: this.selected_user.email,
+      completed: false,
+      status: "assigned",
+      assigned_by: this.user.email,
+      assigned_to_avatar: this.selected_user.photoURL,
+      attachments: [],
+      comments: []
+    };
+
+    // this._task.add_task(data);
+    console.log(data);
+    this.taskForm.reset();
+  };
+
+  check_date = (date: string, fc: string) => {
+    if (
+      moment(Date.now()).format("dddd, MMMM Do YYYY") <
+        moment(date).format("dddd, MMMM Do YYYY") &&
+      fc === "start_date"
+    ) {
+      this.start_date_in_past = true;
+    } else if (
+      moment().format("dddd, MMMM Do YYYY") ===
+        moment(date).format("dddd, MMMM Do YYYY") &&
+      fc === "start_date"
+    ) {
+      this.start_date_today = true;
+    } else {
+      this.start_date_today = false;
+      this.start_date_in_past = false;
+      this.valid_start_date = true;
+    }
+
+    if (
+      moment(Date.now()).format("dddd, MMMM Do YYYY") <
+        moment(date).format("dddd, MMMM Do YYYY") &&
+      fc === "end_date"
+    ) {
+      // this.end_date_in_past = false;
+    } else if (
+      moment().format("dddd, MMMM Do YYYY") ===
+        moment(date).format("dddd, MMMM Do YYYY") &&
+      fc === "end_date"
+    ) {
+      // this.end_date_today = false;
+    } else {
+      this.end_date_in_past = true;
+      this.end_date_today = true;
+    }
+  };
+
+  get_user_tasks = async (uid: string) => {
+    if (uid !== "") {
+      this._spinner.show();
+
+      this._task.get_user(uid).subscribe((user: IUser) => {
+        this.selected_user = user;
+
+        this._task.get_user_tasks(user.email).subscribe((tasks: ITask[]) => {
+          this.user_tasks = tasks;
+
+          if (tasks.length > 0) {
+            tasks.map((t: ITask) => {
+              this.calendarEvents.push(moment(t.start_date));
+            });
+          }
+        });
+
+        this._spinner.hide();
+      });
+    }
+  };
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 class="text-center text-primary">Assign Task To User</h4>
 <div class="row justify-content-md-center">
   <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
     <form [formGroup]="taskForm" (ngSubmit)="add_task()">
@@ -59,7 +231,7 @@
               {{ start_date | date: "full" }}
             </p>
             <div
-              *ngIf="taskForm.get('start_date').errors.date_in_past"
+              *ngIf="start_date_in_past === true"
               class="alert alert-sm alert-danger mt-2"
             >
               <div>
@@ -67,7 +239,7 @@
               </div>
             </div>
             <div
-              *ngIf="taskForm.get('start_date').errors.date_today"
+              *ngIf="start_date_today === true"
               class="alert alert-sm alert-danger mt-2"
             >
               <div>
@@ -109,7 +281,7 @@
               {{ end_date | date: "full" }}
             </p>
             <div
-              *ngIf="taskForm.get('end_date').errors.date_in_past"
+              *ngIf="end_date_in_past === true"
               class="alert alert-sm alert-danger mt-2"
             >
               <div>
@@ -117,7 +289,7 @@
               </div>
             </div>
             <div
-              *ngIf="taskForm.get('end_date').errors.date_today"
+              *ngIf="end_date_today === true"
               class="alert alert-sm alert-danger mt-2"
             >
               <div>
@@ -137,6 +309,9 @@
             <button
               type="submit"
               class="btn btn-success text-center"
+              [disabled]="
+                taskForm.invalid && valid_start_date && valid_end_date
+              "
             >
               <i class="fa fa-plus"></i> Assign Task
             </button>
@@ -146,3 +321,4 @@
     </form>
   </div>
 </div>
+

@@ -5,6 +5,9 @@ import { Router } from "@angular/router";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { ITask } from "../models/task.model";
 import { PnotifyService } from "./pnotify.service";
+import { IUser } from "../models/user.model";
+import { INotification } from "../models/notification.model";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: "root"
@@ -21,21 +24,22 @@ export class TaskService {
   // ========== user management
   get_all_users = () => {
     return this._afs
-      .collection("users", ref => ref.orderBy("displayName", "asc"))
+      .collection<IUser>("users", ref => ref.orderBy("displayName", "asc"))
       .valueChanges();
   };
 
   get_user = (uid: string) => {
-    return this._afs.doc(`users/${uid}`).valueChanges();
+    return this._afs.doc<IUser>(`users/${uid}`).valueChanges();
   };
   // ========== end user management
 
   // ========== task management
   add_task = (task: ITask) => {
+    this._spinner.show();
     const id = this._afs.createId();
     task.uid = id;
     this._afs
-      .collection("tasks")
+      .collection<ITask>("tasks")
       .doc(id)
       .set(task)
       .then(_ => {
@@ -50,15 +54,26 @@ export class TaskService {
       .catch(e => {
         this.handleError(e);
       });
+
+    const notification: INotification = {
+      title: "New Task",
+      message: `"${task.task}" - has been assigned to you from ${task.assigned_by}`,
+      user: task.assigned_to,
+      link: task.uid
+    };
+
+    this.add_notification(notification);
+
+    this._spinner.hide();
   };
 
   get_task = (uid: string) => {
-    return this._afs.doc(`tasks/${uid}`).valueChanges();
+    return this._afs.doc<ITask>(`tasks/${uid}`).valueChanges();
   };
 
   get_user_tasks = (email: string) => {
     return this._afs
-      .collection("tasks", ref =>
+      .collection<ITask>("tasks", ref =>
         ref.where("assigned_to", "==", email).orderBy("start_date", "desc")
       )
       .valueChanges();
@@ -66,7 +81,7 @@ export class TaskService {
 
   get_user_completed_tasks = (email: string) => {
     return this._afs
-      .collection("tasks", ref =>
+      .collection<ITask>("tasks", ref =>
         ref
           .where("assigned_to", "==", email)
           .where("completed", "==", true)
@@ -77,11 +92,10 @@ export class TaskService {
 
   get_user_pending_tasks = (email: string) => {
     return this._afs
-      .collection("tasks", ref =>
+      .collection<ITask>("tasks", ref =>
         ref
           .where("assigned_to", "==", email)
-          // .where("start_date", ">=", Date.now())
-          .where("end_date", "<", Date.now())
+          .where("end_date", ">", moment(Date.now()).format())
           .where("completed", "==", false)
           .orderBy("end_date", "desc")
       )
@@ -90,16 +104,31 @@ export class TaskService {
 
   get_user_overdue_tasks = (email: string) => {
     return this._afs
-      .collection("tasks", ref =>
+      .collection<ITask>("tasks", ref =>
         ref
           .where("assigned_to", "==", email)
-          .where("end_date", "<", Date.now())
+          .where("end_date", "<", moment(Date.now()).format())
           .where("completed", "==", false)
           .orderBy("end_date", "desc")
       )
       .valueChanges();
   };
   // =========== end task management
+
+  // =========== notification management
+  add_notification = (data: INotification) => {
+    this._afs
+      .collection("notifications")
+      .add(data)
+      .then(_ => {
+        this._notify.notify(
+          "Success!",
+          `${data.user} has been notified of this task`,
+          "success"
+        );
+      });
+  };
+  // =========== end notification management
 
   // if error, console log and notify user
   private handleError(error) {

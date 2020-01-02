@@ -7,54 +7,58 @@
   <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
 
-<div class="card-container">
-  <div class="user-header text-center">
-    <img src="{{ user?.photoURL }}" alt="{{ user?.displayName }}" />
-    <h3>Hello, {{ user?.displayName }}</h3>
-    <button class="btn btn-primary" (click)="sign_out()">Sign Out</button>
+<div class="container">
+  <div class="card-container">
+    <div class="user-header text-center">
+      <img src="{{ user?.photoURL }}" alt="{{ user?.displayName }}" />
+      <h3>Hello, {{ user?.displayName }}</h3>
+      <button class="btn btn-primary" (click)="sign_out()">Sign Out</button>
+    </div>
   </div>
+
+  <div class="card-container">
+    <a
+      class="card"
+      [routerLink]="['/user/assign-task']"
+      routerLinkActive="active"
+    >
+      <i class="fa fa-plus mr-1"></i>
+      <span>Assign Task</span> &nbsp;&nbsp;
+      <i class="fa fa-angle-right"></i>
+    </a>
+
+    <a
+      class="card"
+      [routerLink]="['/user/completed-tasks']"
+      routerLinkActive="active"
+    >
+      <span class="badge badge-primary mr-1">{{
+        completed_tasks?.length
+      }}</span>
+      <span>Completed Tasks</span> &nbsp;&nbsp;
+      <i class="fa fa-angle-right"></i>
+    </a>
+
+    <a
+      class="card"
+      [routerLink]="['/user/pending-tasks']"
+      routerLinkActive="active"
+    >
+      <span class="badge badge-primary mr-1">{{ pending_tasks?.length }}</span>
+      <span>Pending Tasks</span> &nbsp;&nbsp;
+      <i class="fa fa-angle-right"></i>
+    </a>
+
+    <a
+      class="card"
+      [routerLink]="['/user/overdue-tasks']"
+      routerLinkActive="active"
+    >
+      <span class="badge badge-primary mr-1">{{ overdue_tasks?.length }}</span>
+      <span>Overdue Tasks</span> &nbsp;&nbsp;
+      <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <router-outlet></router-outlet>
 </div>
-
-<div class="card-container">
-  <a
-    class="card"
-    [routerLink]="['/user/assign-task']"
-    routerLinkActive="active"
-  >
-    <i class="fa fa-plus mr-1"></i>
-    <span>Assign Task</span> &nbsp;&nbsp;
-    <i class="fa fa-angle-right"></i>
-  </a>
-
-  <a
-    class="card"
-    [routerLink]="['/user/completed-tasks']"
-    routerLinkActive="active"
-  >
-    <span class="badge badge-primary mr-1">{{ completed_tasks?.length }}</span>
-    <span>Completed Tasks</span> &nbsp;&nbsp;
-    <i class="fa fa-angle-right"></i>
-  </a>
-
-  <a
-    class="card"
-    [routerLink]="['/user/pending-tasks']"
-    routerLinkActive="active"
-  >
-    <span class="badge badge-primary mr-1">{{ pending_tasks?.length }}</span>
-    <span>Pending Tasks</span> &nbsp;&nbsp;
-    <i class="fa fa-angle-right"></i>
-  </a>
-
-  <a
-    class="card"
-    [routerLink]="['/user/overdue-tasks']"
-    routerLinkActive="active"
-  >
-    <span class="badge badge-primary mr-1">{{ overdue_tasks?.length }}</span>
-    <span>Overdue Tasks</span> &nbsp;&nbsp;
-    <i class="fa fa-angle-right"></i>
-  </a>
-</div>
-
-<router-outlet></router-outlet>

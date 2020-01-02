@@ -27,6 +27,10 @@ export class AssignTaskComponent implements OnInit {
   start_date = null;
   end_date = null;
   calendarEvents = [];
+  end_date_in_past: boolean = true;
+  start_date_in_past: boolean = true;
+  end_date_today: boolean = true;
+  start_date_today: boolean = true;
 
   constructor(
     private _task: TaskService,
@@ -56,22 +60,32 @@ export class AssignTaskComponent implements OnInit {
     this.sub.unsubscribe();
   };
 
-  onChooseStartDate = (date: any) => {
-    this.start_date = moment(date).format();
-    this.taskForm.get("start_date").setValue(this.start_date);
-    this.check_date(date, "start_date");
+  onChooseStartDate = (date: string) => {
+    if (date !== null) {
+      this.start_date = moment(date).format();
+      let start_date = this.taskForm.get("start_date");
+      start_date.setValue(this.start_date, { emitEvent: true });
+      start_date.markAsDirty();
+      start_date.markAsTouched();
+      this.check_date(this.start_date, "start_date");
+    }
   };
 
-  onChooseEndDate = (date: any) => {
-    this.end_date = moment(date).format();
-    this.taskForm.get("end_date").setValue(this.end_date);
-    this.check_date(date, "end_date");
+  onChooseEndDate = (date: string) => {
+    if (date !== null) {
+      this.end_date = moment(date).format();
+      let end_date = this.taskForm.get("end_date");
+      end_date.setValue(this.end_date, { emitEvent: true });
+      end_date.markAsDirty();
+      end_date.markAsTouched();
+      this.check_date(this.end_date, "end_date");
+    }
   };
 
   add_task = () => {
     const { task, description, start_date, end_date } = this.taskForm.value;
 
-    const data: ITask = {
+    const data = {
       task,
       description,
       start_date,
@@ -86,7 +100,6 @@ export class AssignTaskComponent implements OnInit {
     };
 
     this._task.add_task(data);
-
     this.taskForm.reset();
   };
 
