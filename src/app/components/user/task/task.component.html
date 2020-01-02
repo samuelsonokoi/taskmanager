@@ -1,3 +1,40 @@
+<h4 class="text-center text-primary mb-5">{{ task?.task }}</h4>
 <div class="card-container">
-  <h4>task</h4>
+  <dl>
+    <dt>Description</dt>
+    <dd>
+      {{ task?.description }}
+    </dd>
+
+    <dt>Start Date</dt>
+    <dd>{{ date(task?.start_date) }}</dd>
+
+    <dt>End Date</dt>
+    <dd>{{ date(task?.end_date) }}</dd>
+
+    <dt>Assigned by</dt>
+    <dd>{{ task?.assigned_by }}</dd>
+
+    <dt>Status</dt>
+    <dd>
+      {{ task?.status }}
+    </dd>
+    <dt>
+      <button
+        class="btn btn-success"
+        [disabled]="task?.completed"
+        (click)="mark_complete(task?.uid)"
+      >
+        <i class="fa fa-check"></i> Mark as complete
+      </button>
+
+      <button
+        class="btn btn-primary ml-3"
+        [disabled]="!task?.completed"
+        (click)="mark_incomplete(task?.uid)"
+      >
+        <i class="fa fa-undo"></i> Mark as incomplete
+      </button>
+    </dt>
+  </dl>
 </div>

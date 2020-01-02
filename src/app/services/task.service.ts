@@ -59,7 +59,8 @@ export class TaskService {
       title: "New Task",
       message: `"${task.task}" - has been assigned to you from ${task.assigned_by}`,
       user: task.assigned_to,
-      link: task.uid
+      link: task.uid,
+      date: Date.now()
     };
 
     this.add_notification(notification);
@@ -113,6 +114,35 @@ export class TaskService {
       )
       .valueChanges();
   };
+
+  mark_task_as_complete = (uid: string) => {
+    this._spinner.show();
+    this._afs
+      .collection<ITask>("tasks")
+      .doc(uid)
+      .get()
+      .subscribe(doc => {
+        doc.ref.set({ completed: true }, { merge: true }).then(_ => {
+          this._notify.notify(
+            "Success",
+            "You have completed this task",
+            "success"
+          );
+
+          const notification: INotification = {
+            title: "Task completed",
+            message: `${doc.data().assigned_to} completed a task`,
+            user: `${doc.data().assigned_by}`,
+            link: `${doc.data().uid}`,
+            date: Date.now()
+          };
+
+          this.add_notification(notification);
+
+          this._spinner.hide();
+        });
+      });
+  };
   // =========== end task management
 
   // =========== notification management
@@ -123,7 +153,7 @@ export class TaskService {
       .then(_ => {
         this._notify.notify(
           "Success!",
-          `${data.user} has been notified of this task`,
+          `${data.user} has been notified of this action.`,
           "success"
         );
       });

@@ -3,4 +3,5 @@ export interface INotification {
   message: string;
   user: string;
   link?: string;
+  date: number;
 }
