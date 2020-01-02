@@ -24,6 +24,10 @@ export class TaskService {
       .collection("users", ref => ref.orderBy("displayName", "asc"))
       .valueChanges();
   };
+
+  get_user = (uid: string) => {
+    return this._afs.doc(`users/${uid}`).valueChanges();
+  };
   // ========== end user management
 
   // ========== task management
@@ -40,6 +44,8 @@ export class TaskService {
           `task has been successfully assigned to ${task.assigned_to}`,
           "success"
         );
+
+        this._router.navigate([`/user/task/${id}`]);
       })
       .catch(e => {
         this.handleError(e);

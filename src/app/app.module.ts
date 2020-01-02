@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxCalendarModule } from "ss-ngx-calendar";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -21,7 +22,8 @@ import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-t
 import { OverviewComponent } from "./components/user/overview/overview.component";
 import { AuthService } from "./services/auth.service";
 import { TaskService } from "./services/task.service";
-import { AssignTaskComponent } from './components/user/assign-task/assign-task.component';
+import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
+import { TaskComponent } from "./components/user/task/task.component";
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -56,7 +58,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     PendingTasksComponent,
     OverdueTasksComponent,
     OverviewComponent,
-    AssignTaskComponent
+    AssignTaskComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    NgxCalendarModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
   providers: [Title, PnotifyService, AuthService, TaskService],
