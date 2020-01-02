@@ -6,6 +6,7 @@ import { CompletedTasksComponent } from "./components/user/completed-tasks/compl
 import { PendingTasksComponent } from "./components/user/pending-tasks/pending-tasks.component";
 import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-tasks.component";
 import { OverviewComponent } from "./components/user/overview/overview.component";
+import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 
 const routes: Routes = [
   { path: "", component: AuthComponent, pathMatch: "full" },
@@ -14,6 +15,7 @@ const routes: Routes = [
     component: UserComponent,
     children: [
       { path: "", component: OverviewComponent, pathMatch: "full" },
+      { path: "assign-task", component: AssignTaskComponent },
       { path: "completed-tasks", component: CompletedTasksComponent },
       { path: "pending-tasks", component: PendingTasksComponent },
       { path: "overdue-tasks", component: OverdueTasksComponent }

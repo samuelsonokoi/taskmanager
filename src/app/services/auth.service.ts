@@ -71,7 +71,7 @@ export class AuthService {
       } else {
         return false;
       }
-    }, 2000);
+    }, 3000);
   }
 
   getCurrentUser() {
