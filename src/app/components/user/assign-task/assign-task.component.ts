@@ -21,9 +21,8 @@ export class AssignTaskComponent implements OnInit {
   selected_user: IUser;
   sub: Subscription;
   calendarOptions = {
-    fromDate: moment().fromNow(),
-    toDate: moment().add(1, "M"),
-    isFromNow: true
+    isFromNow: true,
+    toDate: moment().add(1, "M")
   };
   start_date = null;
   end_date = null;
@@ -60,11 +59,13 @@ export class AssignTaskComponent implements OnInit {
   onChooseStartDate = (date: any) => {
     this.start_date = moment(date).format();
     this.taskForm.get("start_date").setValue(this.start_date);
+    this.check_date(date, "start_date");
   };
 
   onChooseEndDate = (date: any) => {
     this.end_date = moment(date).format();
     this.taskForm.get("end_date").setValue(this.end_date);
+    this.check_date(date, "end_date");
   };
 
   add_task = () => {
@@ -77,17 +78,36 @@ export class AssignTaskComponent implements OnInit {
       end_date,
       assigned_to: this.selected_user.email,
       completed: false,
-      status: "asigned",
+      status: "assigned",
       assigned_by: this.user.email,
       assigned_to_avatar: this.selected_user.photoURL,
       attachments: [],
       comments: []
     };
 
-    // this._task.add_task(data);
-    console.log(data);
+    this._task.add_task(data);
 
     this.taskForm.reset();
+  };
+
+  check_date = (date: string, fc: string) => {
+    if (
+      moment(Date.now()).format("dddd, MMMM Do YYYY") <
+      moment(date).format("dddd, MMMM Do YYYY")
+    ) {
+      this.taskForm.get(`${fc}`).setErrors({
+        date_in_past: true
+      });
+    } else if (
+      moment().format("dddd, MMMM Do YYYY") ===
+      moment(date).format("dddd, MMMM Do YYYY")
+    ) {
+      this.taskForm.get(`${fc}`).setErrors({
+        date_today: true
+      });
+    } else {
+      this.taskForm.get(`${fc}`).setErrors({});
+    }
   };
 
   get_user_tasks = async (uid: string) => {
