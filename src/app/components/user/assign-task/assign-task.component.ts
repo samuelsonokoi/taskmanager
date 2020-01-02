@@ -51,7 +51,9 @@ export class AssignTaskComponent implements OnInit {
       completed: false,
       status: "asigned",
       assigned_by: this.user.email,
-      assigned_to_avatar: user.photoURL
+      assigned_to_avatar: user.photoURL,
+      attachments: [],
+      comments: []
     };
   };
 }
