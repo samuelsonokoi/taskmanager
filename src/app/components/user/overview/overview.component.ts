@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { IUser } from "src/app/models/user.model";
 import { AuthService } from "src/app/services/auth.service";
@@ -9,7 +9,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: "./overview.component.html",
   styleUrls: ["./overview.component.css"]
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, OnDestroy {
   sub: Subscription;
   user: IUser;
 
@@ -22,5 +22,9 @@ export class OverviewComponent implements OnInit {
     this.sub = this._auth.user.subscribe((user: IUser) => {
       this.user = user;
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

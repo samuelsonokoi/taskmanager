@@ -40,7 +40,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       }
     }
   ],
-  signInSuccessUrl: "",
+  signInSuccessUrl: "/user",
   tosUrl: "",
   privacyPolicyUrl: "",
   credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM

@@ -16,12 +16,18 @@
 </div>
 
 <div class="card-container">
+  <a class="card" [routerLink]="['/user/asign-task']" routerLinkActive="active">
+    <i class="fa fa-plus mr-1"></i>
+    <span>Assign Task</span> &nbsp;&nbsp;
+    <i class="fa fa-angle-right"></i>
+  </a>
+
   <a
     class="card"
     [routerLink]="['/user/completed-tasks']"
     routerLinkActive="active"
   >
-    <span class="badge badge-primary mr-1">{{ completed_tasks.length }}</span>
+    <span class="badge badge-primary mr-1">{{ completed_tasks?.length }}</span>
     <span>Completed Tasks</span> &nbsp;&nbsp;
     <i class="fa fa-angle-right"></i>
   </a>
@@ -31,7 +37,7 @@
     [routerLink]="['/user/pending-tasks']"
     routerLinkActive="active"
   >
-    <span class="badge badge-primary mr-1">{{ pending_tasks.length }}</span>
+    <span class="badge badge-primary mr-1">{{ pending_tasks?.length }}</span>
     <span>Pending Tasks</span> &nbsp;&nbsp;
     <i class="fa fa-angle-right"></i>
   </a>
@@ -41,7 +47,7 @@
     [routerLink]="['/user/overdue-tasks']"
     routerLinkActive="active"
   >
-    <span class="badge badge-primary mr-1">{{ overdue_tasks.length }}</span>
+    <span class="badge badge-primary mr-1">{{ overdue_tasks?.length }}</span>
     <span>Overdue Tasks</span> &nbsp;&nbsp;
     <i class="fa fa-angle-right"></i>
   </a>
