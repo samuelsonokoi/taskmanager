@@ -158,6 +158,10 @@ export class TaskService {
         );
       });
   };
+
+  get_user_notifications = (email: string) => {
+    return this._afs.collection("notifications", ref => ref.where("email", "==", email).orderBy("date", "desc")).valueChanges()
+  }
   // =========== end notification management
 
   // if error, console log and notify user
