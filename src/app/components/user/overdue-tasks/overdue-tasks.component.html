@@ -1,1 +1,42 @@
-<p>overdue-tasks works!</p>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-clip-rotate"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="row justify-content-md-center">
+  <div class="col-6">
+    <a
+      [routerLink]="['/user']"
+      class="btn btn-sm btn-light mb-3 text-left text-primary"
+    >
+      <i class="fa fa-angle-left"></i> Back home</a
+    >
+    <h4 class="text-center text-primary mb-3">Overdue Tasks</h4>
+    <div
+      class="alert alert-danger mb-1"
+      role="alert"
+      *ngFor="let ot of overdue_tasks"
+    >
+      <h6>
+        <b>{{ ot.task }} <i class="fa fa-calendar-check"></i></b>
+      </h6>
+      <p>{{ ot.description }}</p>
+      <b>{{ ot.assigned_by }} assigned this task - {{ date(ot.start_date) }}</b>
+      <br />
+      <span><a [routerLink]="['/user/task', pt.uid]">View this task</a></span>
+    </div>
+
+    <div
+      class="p-2 bg-grey mb-2 text-center"
+      *ngIf="overdue_tasks.length === 0"
+    >
+      <b>
+        You have no pending task at the moment.
+      </b>
+    </div>
+  </div>
+</div>

@@ -258,6 +258,10 @@ svg#clouds {
   width: 1920px;
 }
 
+div.bg-grey {
+  background-color: rgba(216, 216, 216, 0.89);
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
   .card-container > *:not(.circle-link),

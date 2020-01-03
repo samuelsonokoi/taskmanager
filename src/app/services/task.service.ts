@@ -137,7 +137,16 @@ export class TaskService {
             date: Date.now()
           };
 
+          const notification1: INotification = {
+            title: "Task completed",
+            message: `You completed a task`,
+            user: `${doc.data().assigned_to}`,
+            link: `${doc.data().uid}`,
+            date: Date.now()
+          };
+
           this.add_notification(notification);
+          this.add_notification(notification1);
 
           this._spinner.hide();
         });
@@ -148,20 +157,24 @@ export class TaskService {
   // =========== notification management
   add_notification = (data: INotification) => {
     this._afs
-      .collection("notifications")
+      .collection<INotification>("notifications")
       .add(data)
       .then(_ => {
         this._notify.notify(
           "Success!",
-          `${data.user} has been notified of this action.`,
+          `user has been notified of this action.`,
           "success"
         );
       });
   };
 
   get_user_notifications = (email: string) => {
-    return this._afs.collection("notifications", ref => ref.where("email", "==", email).orderBy("date", "desc")).valueChanges()
-  }
+    return this._afs
+      .collection<INotification>("notifications", ref =>
+        ref.where("user", "==", email).orderBy("date", "desc")
+      )
+      .valueChanges();
+  };
   // =========== end notification management
 
   // if error, console log and notify user
