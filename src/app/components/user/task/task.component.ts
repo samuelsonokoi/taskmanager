@@ -45,5 +45,5 @@ export class TaskComponent implements OnInit {
     }
   };
 
-  mark_incomplete = () => {};
+  mark_incomplete = (id: string) => {};
 }
