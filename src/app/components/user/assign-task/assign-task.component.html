@@ -8,6 +8,7 @@
     >
 
     <h4 class="text-center text-primary mb-5">Assign Task To User</h4>
+    {{ taskForm.status }}
     <form [formGroup]="taskForm" (ngSubmit)="add_task()">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-sm-12">
@@ -111,6 +112,12 @@
             >
               You can't select a date in the past.
             </div>
+            <div
+              *ngIf="taskForm.get('end_date').errors.start_date_before_end_date"
+              class="alert alert-sm alert-danger mt-2"
+            >
+              End date can't be before the start date.
+            </div>
             <ngx-calendar
               [options]="calendarOptions"
               (onChooseDate)="onChooseEndDate($event)"
@@ -128,8 +135,13 @@
                 taskForm.get('task').value === '' ||
                 taskForm.get('description').value === '' ||
                 taskForm.get('assigned_to').value === '' ||
-                taskForm.get('start_date').value === '' ||
-                taskForm.get('end_date').value === ''
+                taskForm.controls.start_date.hasError('date_in_past') ||
+                taskForm.controls.end_date.hasError('date_in_past') ||
+                taskForm.controls.end_date.hasError(
+                  'start_date_before_end_date'
+                ) ||
+                start_date === null ||
+                end_date === null
               "
             >
               <i class="fa fa-plus"></i> Assign Task

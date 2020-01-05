@@ -62,18 +62,16 @@ export class AssignTaskComponent implements OnInit {
 
   onChooseStartDate = (date: string) => {
     if (date !== null) {
-      this.start_date = moment(date).format("LLL");
-      let start_date = this.taskForm.get("start_date");
-      start_date.setValue(this.start_date);
+      this.start_date = moment(date).format();
+      this.taskForm.controls.start_date.setValue(this.start_date);
       this.check_date(this.start_date, "start_date");
     }
   };
 
   onChooseEndDate = (date: string) => {
     if (date !== null) {
-      this.end_date = moment(date).format("LLL");
-      let end_date = this.taskForm.get("end_date");
-      end_date.setValue(this.end_date);
+      this.end_date = moment(date).format();
+      this.taskForm.controls.end_date.setValue(this.end_date);
       this.check_date(this.end_date, "end_date");
     }
   };
@@ -105,6 +103,21 @@ export class AssignTaskComponent implements OnInit {
       this.taskForm.get(`${fc}`).setErrors({
         date_in_past: true
       });
+      if (fc === "end_date") {
+        if (moment(this.end_date).isBefore(this.start_date)) {
+          this.taskForm.controls.end_date.setErrors({
+            start_date_before_end_date: true
+          });
+          console.log("start_date_before_end_date");
+        }
+      }
+      // } else if (fc === "end_date" && this.start_date != null) {
+      //   if (moment(this.end_date).isBefore(this.start_date)) {
+      //     this.taskForm.controls.end_date.setErrors({
+      //       start_date_before_end_date: true
+      //     });
+      //     console.log("start_date_before_end_date");
+      //   }
     } else {
       this.taskForm.get(`${fc}`).setErrors({});
     }
