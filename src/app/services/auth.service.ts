@@ -117,7 +117,6 @@ export class AuthService {
 
     if (doc) {
       console.log("---- user found");
-      console.log(doc);
     } else {
       console.log("---- user not found");
       this.saveUserData(user);
