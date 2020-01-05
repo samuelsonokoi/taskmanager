@@ -19,7 +19,10 @@
     <div
       class="alert alert-success mb-1"
       role="alert"
-      *ngFor="let ct of completed_tasks"
+      *ngFor="
+        let ct of completed_tasks
+          | paginate: { itemsPerPage: 10, currentPage: p }
+      "
     >
       <h6>
         <b>{{ ct.task }} <i class="fa fa-check"></i></b>
@@ -38,5 +41,13 @@
         You have no completed task at the moment.
       </b>
     </div>
+
+    <pagination-controls
+      (pageChange)="p = $event"
+      responsive="true"
+      autoHide="true"
+      *ngIf="completed_tasks.length > 0"
+    >
+    </pagination-controls>
   </div>
 </div>

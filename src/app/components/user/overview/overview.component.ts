@@ -23,6 +23,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   all_completed_tasks: ITask[] = [];
   all_overdue_tasks: ITask[] = [];
   all_tasks: ITask[] = [];
+  np: number = 1;
+  op: number = 1;
 
   constructor(
     private _auth: AuthService,

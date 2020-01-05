@@ -9,6 +9,7 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxCalendarModule } from "ss-ngx-calendar";
+import { NgxPaginationModule } from "ngx-pagination";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -73,6 +74,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFireStorageModule,
     AngularFireAuthModule,
     NgxCalendarModule,
+    NgxPaginationModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
   providers: [Title, PnotifyService, AuthService, TaskService],

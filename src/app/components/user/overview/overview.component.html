@@ -20,7 +20,9 @@
     <h4 class="text-center text-primary mb-3">Your Notifications</h4>
     <div
       class="p-2 bg-grey mb-1"
-      *ngFor="let n of notifications; let i = index"
+      *ngFor="
+        let n of notifications | paginate: { itemsPerPage: 10, currentPage: np }
+      "
     >
       <h6>
         {{ n.title }}
@@ -44,13 +46,22 @@
         You have no notifications at the moment.
       </b>
     </div>
+    <pagination-controls
+      (pageChange)="np = $event"
+      autoHide="true"
+      responsive="true"
+      *ngIf="notifications.length > 0"
+    ></pagination-controls>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <h4 class="text-center text-primary mb-3">Overdue Tasks</h4>
     <div
       class="alert alert-danger mb-1"
       role="alert"
-      *ngFor="let ot of overdue_tasks"
+      *ngFor="
+        let ot of overdue_tasks
+          | paginate: { itemsPerPage: 10, currentPage: op }
+      "
     >
       <h6>{{ ot.task }}</h6>
       <p>{{ ot.description }}</p>
@@ -67,5 +78,12 @@
         You have no overdue task at the moment.
       </b>
     </div>
+
+    <pagination-controls
+      (pageChange)="op = $event"
+      autoHide="true"
+      responsive="true"
+      *ngIf="overdue_tasks.length > 0"
+    ></pagination-controls>
   </div>
 </div>

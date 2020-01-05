@@ -19,7 +19,9 @@
     <div
       class="alert alert-info mb-1"
       role="alert"
-      *ngFor="let pt of pending_tasks"
+      *ngFor="
+        let pt of pending_tasks | paginate: { itemsPerPage: 10, currentPage: p }
+      "
     >
       <h6>
         <b>{{ pt.task }} <i class="fa fa-calendar-check"></i></b>
@@ -38,5 +40,13 @@
         You have no pending task at the moment.
       </b>
     </div>
+
+    <pagination-controls
+      (pageChange)="p = $event"
+      autoHide="true"
+      responsive="true"
+      *ngIf="pending_tasks.length > 0"
+    >
+    </pagination-controls>
   </div>
 </div>

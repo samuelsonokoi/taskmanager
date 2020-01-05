@@ -16,6 +16,7 @@ export class PendingTasksComponent implements OnInit {
   sub: Subscription;
   user: IUser;
   pending_tasks: ITask[] = [];
+  p: number = 1;
 
   constructor(
     private _auth: AuthService,

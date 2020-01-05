@@ -16,6 +16,7 @@ export class CompletedTasksComponent implements OnInit {
   sub: Subscription;
   user: IUser;
   completed_tasks: ITask[] = [];
+  p: number = 1;
 
   constructor(
     private _auth: AuthService,
