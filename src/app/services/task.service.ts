@@ -68,6 +68,40 @@ export class TaskService {
     this._spinner.hide();
   };
 
+  get_all_tasks = () => {
+    return this._afs.collection<ITask>("tasks").valueChanges();
+  };
+
+  get_all_completed_tasks = () => {
+    return this._afs
+      .collection<ITask>("tasks", ref =>
+        ref.where("completed", "==", true).orderBy("start_date", "desc")
+      )
+      .valueChanges();
+  };
+
+  get_all_overdue_tasks = () => {
+    return this._afs
+      .collection<ITask>("tasks", ref =>
+        ref
+          .where("end_date", "<", moment(Date.now()).format())
+          .where("completed", "==", false)
+          .orderBy("end_date", "desc")
+      )
+      .valueChanges();
+  };
+
+  get_all_pending_tasks = () => {
+    return this._afs
+      .collection<ITask>("tasks", ref =>
+        ref
+          .where("end_date", ">", moment(Date.now()).format())
+          .where("completed", "==", false)
+          .orderBy("end_date", "desc")
+      )
+      .valueChanges();
+  };
+
   get_task = (uid: string) => {
     return this._afs.doc<ITask>(`tasks/${uid}`).valueChanges();
   };

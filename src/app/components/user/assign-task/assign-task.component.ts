@@ -93,8 +93,7 @@ export class AssignTaskComponent implements OnInit {
       comments: []
     };
 
-    // this._task.add_task(data);
-    console.log(data);
+    this._task.add_task(data);
     this.taskForm.reset();
   };
 
@@ -111,13 +110,6 @@ export class AssignTaskComponent implements OnInit {
           console.log("start_date_before_end_date");
         }
       }
-      // } else if (fc === "end_date" && this.start_date != null) {
-      //   if (moment(this.end_date).isBefore(this.start_date)) {
-      //     this.taskForm.controls.end_date.setErrors({
-      //       start_date_before_end_date: true
-      //     });
-      //     console.log("start_date_before_end_date");
-      //   }
     } else {
       this.taskForm.get(`${fc}`).setErrors({});
     }
