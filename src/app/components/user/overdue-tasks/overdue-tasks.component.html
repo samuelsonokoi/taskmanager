@@ -27,7 +27,7 @@
       <p>{{ ot.description }}</p>
       <b>{{ ot.assigned_by }} assigned this task - {{ date(ot.start_date) }}</b>
       <br />
-      <span><a [routerLink]="['/user/task', pt.uid]">View this task</a></span>
+      <span><a [routerLink]="['/user/task', ot.uid]">View this task</a></span>
     </div>
 
     <div
@@ -35,7 +35,7 @@
       *ngIf="overdue_tasks.length === 0"
     >
       <b>
-        You have no pending task at the moment.
+        Kudos! you have no overdue task at the moment.
       </b>
     </div>
   </div>

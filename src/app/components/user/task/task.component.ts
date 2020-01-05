@@ -44,4 +44,6 @@ export class TaskComponent implements OnInit {
       this._task.mark_task_as_complete(id);
     }
   };
+
+  mark_incomplete = () => {};
 }
