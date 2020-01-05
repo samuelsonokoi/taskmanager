@@ -1,6 +1,13 @@
-<h4 class="text-center text-primary mb-5">Assign Task To User</h4>
 <div class="row justify-content-md-center">
   <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+    <a
+      [routerLink]="['/user']"
+      class="btn btn-sm btn-light mb-3 text-left text-primary"
+    >
+      <i class="fa fa-angle-left"></i> Back home</a
+    >
+
+    <h4 class="text-center text-primary mb-5">Assign Task To User</h4>
     <form [formGroup]="taskForm" (ngSubmit)="add_task()">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-sm-12">
@@ -58,7 +65,7 @@
             <p *ngIf="start_date !== null">
               {{ start_date | date: "full" }}
             </p>
-            <div
+            <!-- <div
               *ngIf="taskForm.get('start_date').errors.date_in_past"
               class="alert alert-sm alert-danger mt-2"
             >
@@ -73,7 +80,7 @@
               <div>
                 Select a date that isn't today.
               </div>
-            </div>
+            </div> -->
             <ngx-calendar
               [options]="calendarOptions"
               (onChooseDate)="onChooseStartDate($event)"
@@ -108,7 +115,7 @@
             <p *ngIf="end_date !== null">
               {{ end_date | date: "full" }}
             </p>
-            <div
+            <!-- <div
               *ngIf="taskForm.get('end_date').errors.date_in_past"
               class="alert alert-sm alert-danger mt-2"
             >
@@ -123,7 +130,7 @@
               <div>
                 Select a date that isn't today.
               </div>
-            </div>
+            </div> -->
             <ngx-calendar
               [options]="calendarOptions"
               (onChooseDate)="onChooseEndDate($event)"
@@ -134,10 +141,7 @@
         </div>
         <div class="col-sm-12">
           <div class="form-group text-center">
-            <button
-              type="submit"
-              class="btn btn-success text-center"
-            >
+            <button type="submit" class="btn btn-success text-center">
               <i class="fa fa-plus"></i> Assign Task
             </button>
           </div>

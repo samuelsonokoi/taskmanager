@@ -64,10 +64,8 @@ export class AssignTaskComponent implements OnInit {
     if (date !== null) {
       this.start_date = moment(date).format();
       let start_date = this.taskForm.get("start_date");
-      start_date.setValue(this.start_date, { emitEvent: true });
-      start_date.markAsDirty();
-      start_date.markAsTouched();
-      this.check_date(this.start_date, "start_date");
+      start_date.setValue(this.start_date);
+      // this.check_date(date, "start_date");
     }
   };
 
@@ -75,10 +73,8 @@ export class AssignTaskComponent implements OnInit {
     if (date !== null) {
       this.end_date = moment(date).format();
       let end_date = this.taskForm.get("end_date");
-      end_date.setValue(this.end_date, { emitEvent: true });
-      end_date.markAsDirty();
-      end_date.markAsTouched();
-      this.check_date(this.end_date, "end_date");
+      end_date.setValue(this.end_date);
+      // this.check_date(date, "end_date");
     }
   };
 
@@ -105,14 +101,14 @@ export class AssignTaskComponent implements OnInit {
 
   check_date = (date: string, fc: string) => {
     if (
-      moment(Date.now()).format("dddd, MMMM Do YYYY") <
+      moment(Date.now()).format("dddd, MMMM Do YYYY") >
       moment(date).format("dddd, MMMM Do YYYY")
     ) {
       this.taskForm.get(`${fc}`).setErrors({
         date_in_past: true
       });
     } else if (
-      moment().format("dddd, MMMM Do YYYY") ===
+      moment(Date.now()).format("dddd, MMMM Do YYYY") ===
       moment(date).format("dddd, MMMM Do YYYY")
     ) {
       this.taskForm.get(`${fc}`).setErrors({
