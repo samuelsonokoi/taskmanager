@@ -62,19 +62,19 @@ export class AssignTaskComponent implements OnInit {
 
   onChooseStartDate = (date: string) => {
     if (date !== null) {
-      this.start_date = moment(date).format();
+      this.start_date = moment(date).format("LLL");
       let start_date = this.taskForm.get("start_date");
       start_date.setValue(this.start_date);
-      // this.check_date(date, "start_date");
+      this.check_date(this.start_date, "start_date");
     }
   };
 
   onChooseEndDate = (date: string) => {
     if (date !== null) {
-      this.end_date = moment(date).format();
+      this.end_date = moment(date).format("LLL");
       let end_date = this.taskForm.get("end_date");
       end_date.setValue(this.end_date);
-      // this.check_date(date, "end_date");
+      this.check_date(this.end_date, "end_date");
     }
   };
 
@@ -95,24 +95,15 @@ export class AssignTaskComponent implements OnInit {
       comments: []
     };
 
-    this._task.add_task(data);
+    // this._task.add_task(data);
+    console.log(data);
     this.taskForm.reset();
   };
 
   check_date = (date: string, fc: string) => {
-    if (
-      moment(Date.now()).format("dddd, MMMM Do YYYY") >
-      moment(date).format("dddd, MMMM Do YYYY")
-    ) {
+    if (moment().isAfter(date)) {
       this.taskForm.get(`${fc}`).setErrors({
         date_in_past: true
-      });
-    } else if (
-      moment(Date.now()).format("dddd, MMMM Do YYYY") ===
-      moment(date).format("dddd, MMMM Do YYYY")
-    ) {
-      this.taskForm.get(`${fc}`).setErrors({
-        date_today: true
       });
     } else {
       this.taskForm.get(`${fc}`).setErrors({});

@@ -65,22 +65,12 @@
             <p *ngIf="start_date !== null">
               {{ start_date | date: "full" }}
             </p>
-            <!-- <div
+            <div
               *ngIf="taskForm.get('start_date').errors.date_in_past"
               class="alert alert-sm alert-danger mt-2"
             >
-              <div>
-                You can't select a date in the past.
-              </div>
+              You can't select a date in the past.
             </div>
-            <div
-              *ngIf="taskForm.get('start_date').errors.date_today"
-              class="alert alert-sm alert-danger mt-2"
-            >
-              <div>
-                Select a date that isn't today.
-              </div>
-            </div> -->
             <ngx-calendar
               [options]="calendarOptions"
               (onChooseDate)="onChooseStartDate($event)"
@@ -115,22 +105,12 @@
             <p *ngIf="end_date !== null">
               {{ end_date | date: "full" }}
             </p>
-            <!-- <div
+            <div
               *ngIf="taskForm.get('end_date').errors.date_in_past"
               class="alert alert-sm alert-danger mt-2"
             >
-              <div>
-                You can't select a date in the past.
-              </div>
+              You can't select a date in the past.
             </div>
-            <div
-              *ngIf="taskForm.get('end_date').errors.date_today"
-              class="alert alert-sm alert-danger mt-2"
-            >
-              <div>
-                Select a date that isn't today.
-              </div>
-            </div> -->
             <ngx-calendar
               [options]="calendarOptions"
               (onChooseDate)="onChooseEndDate($event)"
@@ -141,7 +121,17 @@
         </div>
         <div class="col-sm-12">
           <div class="form-group text-center">
-            <button type="submit" class="btn btn-success text-center">
+            <button
+              type="submit"
+              class="btn btn-success text-center"
+              [disabled]="
+                taskForm.get('task').value === '' ||
+                taskForm.get('description').value === '' ||
+                taskForm.get('assigned_to').value === '' ||
+                taskForm.get('start_date').value === '' ||
+                taskForm.get('end_date').value === ''
+              "
+            >
               <i class="fa fa-plus"></i> Assign Task
             </button>
           </div>
