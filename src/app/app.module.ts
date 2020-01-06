@@ -25,6 +25,7 @@ import { AuthService } from "./services/auth.service";
 import { TaskService } from "./services/task.service";
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
+import { AuthGuard } from "./services/auth.guard";
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -77,7 +78,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     NgxPaginationModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
-  providers: [Title, PnotifyService, AuthService, TaskService],
+  providers: [Title, PnotifyService, AuthService, TaskService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

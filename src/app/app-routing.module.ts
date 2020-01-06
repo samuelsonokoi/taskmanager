@@ -8,12 +8,15 @@ import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-t
 import { OverviewComponent } from "./components/user/overview/overview.component";
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
+import { AuthGuard } from "./services/auth.guard";
 
 const routes: Routes = [
   { path: "", component: AuthComponent, pathMatch: "full" },
   {
     path: "user",
     component: UserComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       { path: "", component: OverviewComponent, pathMatch: "full" },
       { path: "assign-task", component: AssignTaskComponent },

@@ -64,15 +64,24 @@ export class AuthService {
   }
 
   // Returns true if user is logged in
-  authenticated() {
-    setInterval(() => {
-      if (this._afAuth.auth.currentUser) {
-        return true;
+  authenticated = (): boolean => {
+    let authenticated: boolean;
+    // setInterval(() => {
+    this._afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        authenticated = true;
       } else {
-        return false;
+        authenticated = false;
       }
-    }, 3000);
-  }
+    });
+    return authenticated;
+    // }, 3000);
+    // if (this._afAuth.auth.currentUser) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  };
 
   getCurrentUser() {
     return new Promise<any>((resolve, reject) => {
