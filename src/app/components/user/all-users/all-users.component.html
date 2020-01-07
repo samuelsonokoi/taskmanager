@@ -1,0 +1,46 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-clip-rotate"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <a
+      [routerLink]="['/user']"
+      class="btn btn-sm btn-light mb-3 text-left text-primary"
+    >
+      <i class="fa fa-angle-left"></i> Back home</a
+    >
+    <h4 class="text-center text-primary mb-3">All Users</h4>
+    <div
+      class="alert alert-success mb-1"
+      role="alert"
+      *ngFor="
+        let au of all_users | paginate: { itemsPerPage: 10, currentPage: p }
+      "
+    >
+      <h6>
+        <b>{{ au.displayName }}</b>
+      </h6>
+      <p>{{ mask_email(au.email) }}</p>
+    </div>
+
+    <div class="p-2 bg-grey mb-2 text-center" *ngIf="all_users.length === 0">
+      <b>
+        No users at the moment.
+      </b>
+    </div>
+
+    <pagination-controls
+      (pageChange)="p = $event"
+      responsive="true"
+      autoHide="true"
+      *ngIf="all_users.length > 0"
+    >
+    </pagination-controls>
+  </div>
+</div>

@@ -10,9 +10,10 @@
 <div class="row justify-content-md-center">
   <div class="col-12">
     <h5 class="text-center">
-      Total Users - {{ users.length }} | Total Tasks - {{ all_tasks.length }} |
-      Total Completed Tasks - {{ all_completed_tasks.length }} | Total Pending
-      Tasks - {{ all_pending_tasks.length }} | Total Overdue Tasks -
+      <a [routerLink]="['/user/all-users']">Total Users</a> -
+      {{ users.length }} | Total Tasks - {{ all_tasks.length }} | Total
+      Completed Tasks - {{ all_completed_tasks.length }} | Total Pending Tasks -
+      {{ all_pending_tasks.length }} | Total Overdue Tasks -
       {{ all_overdue_tasks.length }}
     </h5>
   </div>

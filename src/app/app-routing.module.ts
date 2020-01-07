@@ -14,6 +14,7 @@ import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-t
 import { OverviewComponent } from "./components/user/overview/overview.component";
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
+import { AllUsersComponent } from "./components/user/all-users/all-users.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["/"]);
 const redirectLoggedInToUser = () => redirectLoggedInTo(["/user"]);
@@ -39,7 +40,8 @@ const routes: Routes = [
       { path: "task/:id", component: TaskComponent },
       { path: "completed-tasks", component: CompletedTasksComponent },
       { path: "pending-tasks", component: PendingTasksComponent },
-      { path: "overdue-tasks", component: OverdueTasksComponent }
+      { path: "overdue-tasks", component: OverdueTasksComponent },
+      { path: "all-users", component: AllUsersComponent }
     ]
   },
   { path: "**", redirectTo: "" }
