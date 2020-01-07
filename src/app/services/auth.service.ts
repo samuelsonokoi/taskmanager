@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import PNotify from "pnotify/dist/es/PNotify";
 import PNotifyButtons from "pnotify/dist/es/PNotifyButtons";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -9,9 +9,10 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { first } from "rxjs/operators";
+import { first, switchMap } from "rxjs/operators";
 import { IUser } from "../models/user.model";
 import { NgxSpinnerService } from "ngx-spinner";
+import { User } from "firebase";
 
 @Injectable({
   providedIn: "root"
@@ -19,7 +20,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class AuthService {
   pnotify = undefined;
   user;
-  currentUser: firebase.User;
+  currentUser: Observable<IUser>;
   signedIn = false;
   // store the URL so we can redirect after logging in
   redirectUrl: string;
@@ -37,7 +38,7 @@ export class AuthService {
       this._afAuth.auth.onAuthStateChanged(user => {
         if (user) {
           this.signedIn = true;
-          this.currentUser = user;
+
           this._afs
             .doc(`users/${user.uid}`)
             .valueChanges()
@@ -64,18 +65,18 @@ export class AuthService {
   }
 
   // Returns true if user is logged in
-  authenticated = (): boolean => {
-    let authenticated: boolean;
-    // setInterval(() => {
-    this._afAuth.auth.onAuthStateChanged(user => {
-      if (user) {
-        authenticated = true;
-      } else {
-        authenticated = false;
-      }
-    });
-    return authenticated;
-    // }, 3000);
+  authenticated = () => {
+    setInterval(() => {
+      let authenticated: boolean;
+      this._afAuth.auth.onAuthStateChanged(user => {
+        if (user) {
+          authenticated = true;
+        } else {
+          authenticated = false;
+        }
+      });
+      return authenticated;
+    }, 3000);
     // if (this._afAuth.auth.currentUser) {
     //   return true;
     // } else {

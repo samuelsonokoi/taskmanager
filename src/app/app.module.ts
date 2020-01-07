@@ -7,6 +7,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireAuthGuardModule } from "@angular/fire/auth-guard";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxCalendarModule } from "ss-ngx-calendar";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -25,7 +26,6 @@ import { AuthService } from "./services/auth.service";
 import { TaskService } from "./services/task.service";
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
-import { AuthGuard } from "./services/auth.guard";
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -74,11 +74,12 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    AngularFireAuthGuardModule,
     NgxCalendarModule,
     NgxPaginationModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
-  providers: [Title, PnotifyService, AuthService, TaskService, AuthGuard],
+  providers: [Title, PnotifyService, AuthService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

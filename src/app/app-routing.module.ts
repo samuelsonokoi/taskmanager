@@ -1,5 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+  redirectLoggedInTo
+} from "@angular/fire/auth-guard";
+
 import { UserComponent } from "./components/user/user.component";
 import { AuthComponent } from "./components/auth/auth.component";
 import { CompletedTasksComponent } from "./components/user/completed-tasks/completed-tasks.component";
@@ -8,15 +14,25 @@ import { OverdueTasksComponent } from "./components/user/overdue-tasks/overdue-t
 import { OverviewComponent } from "./components/user/overview/overview.component";
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
-import { AuthGuard } from "./services/auth.guard";
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["/"]);
+const redirectLoggedInToUser = () => redirectLoggedInTo(["/user"]);
 
 const routes: Routes = [
-  { path: "", component: AuthComponent, pathMatch: "full" },
+  {
+    path: "",
+    component: AuthComponent,
+    pathMatch: "full",
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToUser }
+  },
   {
     path: "user",
     component: UserComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin
+    },
     children: [
       { path: "", component: OverviewComponent, pathMatch: "full" },
       { path: "assign-task", component: AssignTaskComponent },

@@ -22,15 +22,7 @@ export class AuthComponent implements OnInit {
     private _afAuth: AngularFireAuth
   ) {}
 
-  ngOnInit() {
-    this._afAuth.auth.onAuthStateChanged(user => {
-      if (user) {
-        this._router.navigate(["/user"]);
-      } else {
-        this._router.navigate([""]);
-      }
-    });
-  }
+  ngOnInit() {}
 
   successCallback(signInSuccessData: FirebaseUISignInSuccessWithAuthResult) {
     this._auth.saveUser(signInSuccessData.authResult.user);
