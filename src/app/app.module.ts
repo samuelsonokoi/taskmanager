@@ -27,6 +27,7 @@ import { TaskService } from "./services/task.service";
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
 import { AllUsersComponent } from './components/user/all-users/all-users.component';
+import { AllTasksComponent } from './components/user/all-tasks/all-tasks.component';
 
 // Firebase config
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -63,7 +64,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     OverviewComponent,
     AssignTaskComponent,
     TaskComponent,
-    AllUsersComponent
+    AllUsersComponent,
+    AllTasksComponent
   ],
   imports: [
     BrowserModule,

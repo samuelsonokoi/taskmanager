@@ -15,6 +15,7 @@ import { OverviewComponent } from "./components/user/overview/overview.component
 import { AssignTaskComponent } from "./components/user/assign-task/assign-task.component";
 import { TaskComponent } from "./components/user/task/task.component";
 import { AllUsersComponent } from "./components/user/all-users/all-users.component";
+import { AllTasksComponent } from "./components/user/all-tasks/all-tasks.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["/"]);
 const redirectLoggedInToUser = () => redirectLoggedInTo(["/user"]);
@@ -41,7 +42,8 @@ const routes: Routes = [
       { path: "completed-tasks", component: CompletedTasksComponent },
       { path: "pending-tasks", component: PendingTasksComponent },
       { path: "overdue-tasks", component: OverdueTasksComponent },
-      { path: "all-users", component: AllUsersComponent }
+      { path: "all-users", component: AllUsersComponent },
+      { path: "all-tasks", component: AllTasksComponent }
     ]
   },
   { path: "**", redirectTo: "" }
