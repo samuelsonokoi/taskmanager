@@ -48,7 +48,7 @@ export class TaskComponent implements OnInit {
   mark_incomplete = (id: string) => {
     let c = confirm("Are sure you want to mark this task as incomplete?");
     if (c) {
-      this._task.mark_task_as_complete(id);
+      console.log(id);
     }
   };
 }
