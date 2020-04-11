@@ -194,7 +194,7 @@ export class TaskService {
       .doc(uid)
       .get()
       .subscribe((doc) => {
-        doc.ref.set({ completed: true }, { merge: true }).then((_) => {
+        doc.ref.set({ completed: false }, { merge: true }).then(() => {
           this._notify.notify(
             "Success",
             "You have marked this task as incomplete.",
@@ -224,6 +224,16 @@ export class TaskService {
 
           this._spinner.hide();
         });
+      });
+  };
+
+  delete_task = (uid: string) => {
+    this._afs
+      .collection<ITask>("tasks")
+      .doc(uid)
+      .delete()
+      .then(() => {
+        this._router.navigate([""]);
       });
   };
   // =========== end task management

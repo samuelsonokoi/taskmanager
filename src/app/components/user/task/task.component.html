@@ -16,6 +16,13 @@
       <i class="fa fa-angle-left"></i> Back home</a
     >
 
+    <button
+      class="btn btn-sm btn-light mb-3 float-right text-danger"
+      (click)="delete_task()"
+    >
+      <i class="fa fa-trash"></i> Delete task
+    </button>
+
     <h4 class="text-center text-primary mb-5">{{ task?.task }}</h4>
 
     <div class="card-container">
