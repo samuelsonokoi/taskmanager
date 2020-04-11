@@ -10,7 +10,7 @@ import { INotification } from "../models/notification.model";
 import * as moment from "moment";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class TaskService {
   constructor(
@@ -24,7 +24,7 @@ export class TaskService {
   // ========== user management
   get_all_users = () => {
     return this._afs
-      .collection<IUser>("users", ref => ref.orderBy("displayName", "asc"))
+      .collection<IUser>("users", (ref) => ref.orderBy("displayName", "asc"))
       .valueChanges();
   };
 
@@ -42,7 +42,7 @@ export class TaskService {
       .collection<ITask>("tasks")
       .doc(id)
       .set(task)
-      .then(_ => {
+      .then((_) => {
         this._notify.notify(
           "Success",
           `task has been successfully assigned to ${task.assigned_to}`,
@@ -51,7 +51,7 @@ export class TaskService {
 
         this._router.navigate([`/user/task/${id}`]);
       })
-      .catch(e => {
+      .catch((e) => {
         this.handleError(e);
       });
 
@@ -60,7 +60,7 @@ export class TaskService {
       message: `"${task.task}" - has been assigned to you from ${task.assigned_by}`,
       user: task.assigned_to,
       link: task.uid,
-      date: Date.now()
+      date: Date.now(),
     };
 
     this.add_notification(notification);
@@ -74,7 +74,7 @@ export class TaskService {
 
   get_all_completed_tasks = () => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref.where("completed", "==", true).orderBy("start_date", "desc")
       )
       .valueChanges();
@@ -82,7 +82,7 @@ export class TaskService {
 
   get_all_overdue_tasks = () => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref
           .where("end_date", "<", moment(Date.now()).format())
           .where("completed", "==", false)
@@ -93,7 +93,7 @@ export class TaskService {
 
   get_all_pending_tasks = () => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref
           .where("end_date", ">", moment(Date.now()).format())
           .where("completed", "==", false)
@@ -108,7 +108,7 @@ export class TaskService {
 
   get_user_tasks = (email: string) => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref.where("assigned_to", "==", email).orderBy("start_date", "desc")
       )
       .valueChanges();
@@ -116,7 +116,7 @@ export class TaskService {
 
   get_user_completed_tasks = (email: string) => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref
           .where("assigned_to", "==", email)
           .where("completed", "==", true)
@@ -127,7 +127,7 @@ export class TaskService {
 
   get_user_pending_tasks = (email: string) => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref
           .where("assigned_to", "==", email)
           .where("end_date", ">", moment(Date.now()).format())
@@ -139,7 +139,7 @@ export class TaskService {
 
   get_user_overdue_tasks = (email: string) => {
     return this._afs
-      .collection<ITask>("tasks", ref =>
+      .collection<ITask>("tasks", (ref) =>
         ref
           .where("assigned_to", "==", email)
           .where("end_date", "<", moment(Date.now()).format())
@@ -155,8 +155,8 @@ export class TaskService {
       .collection<ITask>("tasks")
       .doc(uid)
       .get()
-      .subscribe(doc => {
-        doc.ref.set({ completed: true }, { merge: true }).then(_ => {
+      .subscribe((doc) => {
+        doc.ref.set({ completed: true }, { merge: true }).then((_) => {
           this._notify.notify(
             "Success",
             "You have completed this task",
@@ -168,7 +168,7 @@ export class TaskService {
             message: `${doc.data().assigned_to} completed a task`,
             user: `${doc.data().assigned_by}`,
             link: `${doc.data().uid}`,
-            date: Date.now()
+            date: Date.now(),
           };
 
           const notification1: INotification = {
@@ -176,7 +176,47 @@ export class TaskService {
             message: `You completed a task`,
             user: `${doc.data().assigned_to}`,
             link: `${doc.data().uid}`,
-            date: Date.now()
+            date: Date.now(),
+          };
+
+          this.add_notification(notification);
+          this.add_notification(notification1);
+
+          this._spinner.hide();
+        });
+      });
+  };
+
+  mark_task_as_incomplete = (uid: string) => {
+    this._spinner.show();
+    this._afs
+      .collection<ITask>("tasks")
+      .doc(uid)
+      .get()
+      .subscribe((doc) => {
+        doc.ref.set({ completed: true }, { merge: true }).then((_) => {
+          this._notify.notify(
+            "Success",
+            "You have marked this task as incomplete.",
+            "info"
+          );
+
+          const notification: INotification = {
+            title: "Incomplete task",
+            message: `Hello ${
+              doc.data().assigned_to
+            }, this task is incompleted.`,
+            user: `${doc.data().assigned_by}`,
+            link: `${doc.data().uid}`,
+            date: Date.now(),
+          };
+
+          const notification1: INotification = {
+            title: "Incomplete task",
+            message: `You marked a task as incompleted`,
+            user: `${doc.data().assigned_to}`,
+            link: `${doc.data().uid}`,
+            date: Date.now(),
           };
 
           this.add_notification(notification);
@@ -193,7 +233,7 @@ export class TaskService {
     this._afs
       .collection<INotification>("notifications")
       .add(data)
-      .then(_ => {
+      .then((_) => {
         this._notify.notify(
           "Success!",
           `user has been notified of this action.`,
@@ -204,7 +244,7 @@ export class TaskService {
 
   get_user_notifications = (email: string) => {
     return this._afs
-      .collection<INotification>("notifications", ref =>
+      .collection<INotification>("notifications", (ref) =>
         ref.where("user", "==", email).orderBy("date", "desc")
       )
       .valueChanges();

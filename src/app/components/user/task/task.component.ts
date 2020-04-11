@@ -10,7 +10,7 @@ import * as moment from "moment";
 @Component({
   selector: "app-task",
   templateUrl: "./task.component.html",
-  styleUrls: ["./task.component.css"]
+  styleUrls: ["./task.component.css"],
 })
 export class TaskComponent implements OnInit {
   sub: Subscription;
@@ -48,7 +48,7 @@ export class TaskComponent implements OnInit {
   mark_incomplete = (id: string) => {
     let c = confirm("Are sure you want to mark this task as incomplete?");
     if (c) {
-      console.log(id);
+      this._task.mark_task_as_complete(id);
     }
   };
 }
