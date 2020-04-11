@@ -1,5 +1,6 @@
 export interface ITask {
   task: string;
+  module: string;
   description: string;
   start_date: string;
   end_date: string;
