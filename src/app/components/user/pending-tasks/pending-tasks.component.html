@@ -4,7 +4,7 @@
   color="#fff"
   type="ball-clip-rotate"
 >
-  <p style="font-size: 20px; color: white">Loading...</p>
+  <p style="font-size: 20px; color: white;">Loading...</p>
 </ngx-spinner>
 
 <div class="row justify-content-md-center">
@@ -26,6 +26,7 @@
       <h6>
         <b>{{ pt.task }} <i class="fa fa-calendar-check"></i></b>
       </h6>
+      <p *ngIf="pt.module">{{ pt.module }}</p>
       <p>{{ pt.description }}</p>
       <b>{{ pt.assigned_by }} assigned this task - {{ date(pt.start_date) }}</b>
       <br />

@@ -12,12 +12,21 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-sm-12">
           <div class="form-group">
-            <input
-              type="text"
+            <select
+              class="custom-select mt-2"
+              id="inlineFormCustomSelectPref0"
               formControlName="task"
-              class="form-control"
-              placeholder="Give the task a name"
-            />
+              (change)="populate_module($event.target.value)"
+            >
+              <option selected="" value="">Select school</option>
+              <option value="SCHOOL OF ACCOUNTING">SCHOOL OF ACCOUNTING</option>
+              <option value="SCHOOL OF BUSINESS">SCHOOL OF BUSINESS</option>
+              <option value="SCHOOL OF LAW">SCHOOL OF LAW</option>
+              <option value="SCHOOL OF SCIENCE & TECHNOLOGY"
+                >SCHOOL OF SCIENCE & TECHNOLOGY</option
+              >
+              <option value="SCHOOL OF PYSCHOLOGY">SCHOOL OF PYSCHOLOGY</option>
+            </select>
             <div
               *ngIf="
                 taskForm.get('task').invalid &&
@@ -32,12 +41,34 @@
 
             <select
               class="custom-select mt-2"
-              id="inlineFormCustomSelectPref0"
+              id="inlineFormCustomSelectPref2"
+              formControlName="module"
+            >
+              <option selected="" value="">Select course module/number</option>
+              <option *ngFor="let mnn of module_name_number" value="{{ mnn }}">
+                {{ mnn }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                taskForm.get('module').invalid &&
+                (taskForm.get('module').dirty || taskForm.get('module').touched)
+              "
+              class="alert alert-sm alert-danger mt-2"
+            >
+              <div *ngIf="taskForm.get('module').errors.required">
+                You need to select a module name and number.
+              </div>
+            </div>
+
+            <select
+              class="custom-select mt-2"
+              id="inlineFormCustomSelectPref1"
               formControlName="assigned_to"
               (change)="get_user_tasks($event.target.value)"
             >
               <option selected="true" value=""
-                >Select user to assign task</option
+                >Select user to assign module</option
               >
               <option *ngFor="let u of users" value="{{ u.uid }}">
                 <span *ngIf="u.email === user?.email"> Me </span>
@@ -84,7 +115,7 @@
             <textarea
               formControlName="description"
               class="form-control"
-              rows="3"
+              rows="5"
               placeholder="What is this task about?"
             ></textarea>
             <div
@@ -96,7 +127,7 @@
               class="alert alert-sm alert-danger mt-2"
             >
               <div *ngIf="taskForm.get('description').errors.required">
-                Tell the user what the task is all about.
+                Write a description.
               </div>
             </div>
           </div>
