@@ -12,10 +12,10 @@
     <h5 class="text-center">
       <a [routerLink]="['/user/all-users']">Total Users</a> -
       {{ users.length }} |
-      <a [routerLink]="['/user/all-tasks']">Total Tasks</a> -
-      {{ all_tasks.length }} | Total Completed Tasks -
-      {{ all_completed_tasks.length }} | Total Pending Tasks -
-      {{ all_pending_tasks.length }} | Total Overdue Tasks -
+      <a [routerLink]="['/user/all-tasks']">Total Modules</a> -
+      {{ all_tasks.length }} | Total Completed Modules -
+      {{ all_completed_tasks.length }} | Total Pending Modules -
+      {{ all_pending_tasks.length }} | Total Overdue Modules -
       {{ all_overdue_tasks.length }}
 
       <!-- Total Users - 0 | Total Tasks - 0 | Total Completed Tasks - 0 | Total
@@ -42,7 +42,7 @@
         ></i>
       </h6>
       <span>{{ n.message }}</span> <br />
-      <span><a [routerLink]="['/user/task', n.link]">View task</a></span>
+      <span><a [routerLink]="['/user/task', n.link]">View Module</a></span>
     </div>
     <div
       class="p-2 bg-grey mb-2 text-center"
@@ -60,7 +60,7 @@
     ></pagination-controls>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-    <h4 class="text-center text-primary mb-3">Overdue Tasks</h4>
+    <h4 class="text-center text-primary mb-3">Overdue Modules</h4>
     <div
       class="alert alert-danger mb-1"
       role="alert"
@@ -74,7 +74,7 @@
       <p>{{ ot.description }}</p>
       <b>{{ ot.assigned_by }} assigned this task - {{ date(ot.start_date) }}</b>
       <br />
-      <span><a [routerLink]="['/user/task', ot.uid]">View this task</a></span>
+      <span><a [routerLink]="['/user/task', ot.uid]">View this Module</a></span>
     </div>
 
     <div
@@ -82,7 +82,7 @@
       *ngIf="overdue_tasks.length === 0"
     >
       <b>
-        You have no overdue task at the moment.
+        You have no overdue Modules at the moment.
       </b>
     </div>
 

@@ -7,7 +7,7 @@
       <i class="fa fa-angle-left"></i> Back home</a
     >
 
-    <h4 class="text-center text-primary mb-5">Assign Task To User</h4>
+    <h4 class="text-center text-primary mb-5">Assign Module To Staff</h4>
     <form [formGroup]="taskForm" (ngSubmit)="add_task()">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-sm-12">
@@ -35,7 +35,7 @@
               class="alert alert-sm alert-danger mt-2"
             >
               <div *ngIf="taskForm.get('task').errors.required">
-                Task name is required.
+                Module name is required.
               </div>
             </div>
 
@@ -68,7 +68,7 @@
               (change)="get_user_tasks($event.target.value)"
             >
               <option selected="true" value=""
-                >Select user to assign module</option
+                >Select staff to assign module</option
               >
               <option *ngFor="let u of users" value="{{ u.uid }}">
                 <span *ngIf="u.email === user?.email"> Me </span>
