@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import * as moment from "moment";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-assign-task",
@@ -172,7 +173,8 @@ export class AssignTaskComponent implements OnInit {
   constructor(
     private _task: TaskService,
     private _auth: AuthService,
-    private _spinner: NgxSpinnerService
+    private _spinner: NgxSpinnerService,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -187,6 +189,9 @@ export class AssignTaskComponent implements OnInit {
 
     this.sub = this._auth.user.subscribe((user: IUser) => {
       this.user = user;
+      if (!user.admin) {
+        this._router.navigate(["/user"]);
+      }
     });
 
     this.sub = this._task.get_all_users().subscribe((users: IUser[]) => {
